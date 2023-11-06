@@ -4,7 +4,7 @@
 module.exports = {
   siteMetadata: {
     title: `QR Code Generator`,
-    siteUrl: `qr.amcc.io`,
+    siteUrl: `https://qr.amcc.io`,
   },
   plugins: ["gatsby-plugin-sass"],
 };
