@@ -1,5 +1,6 @@
 import * as React from "react";
 import { QRCodeSVG } from "qrcode.react";
+import { saveSvgAsPng } from "save-svg-as-png";
 
 const pageStyles = {
   color: "#232129",
@@ -49,6 +50,12 @@ const IndexPage = () => {
     link.click();
   }
 
+  function downloadAsPNG() {
+    saveSvgAsPng(document.getElementById("qr-code"), "qr-code.png", {
+      scale: 10,
+    });
+  }
+
   return (
     <main style={pageStyles}>
       <h1 style={headingStyles}>QR Code Generator</h1>
@@ -57,6 +64,7 @@ const IndexPage = () => {
         <div>
           <div style={downloader} ref={svgRef}>
             <QRCodeSVG
+              id="qr-code"
               value={url}
               style={svgStyle}
               // renderAs="svg"
@@ -80,7 +88,8 @@ const IndexPage = () => {
           </form>
 
           <div>
-            <button onClick={downloadAsSVG}>download QR code as SVG</button>
+            <button onClick={downloadAsSVG}>download SVG</button>
+            <button onClick={downloadAsPNG}>download PNG</button>
           </div>
         </div>
       </div>
