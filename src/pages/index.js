@@ -19,22 +19,30 @@ const inputStyles = {
   width: "min(460px, 100%)",
 };
 const downloader = {
-  cursor: "pointer",
+  // cursor: "pointer",
+  display: "inline-block",
   // height: "50vh",
 };
 const svgStyle = {
+  // cursor: "pointer",
   height: "50vh",
   width: "50vh",
 };
+const flex = {
+  display: "flex",
+  justifyContent: "space-between",
+  alignItems: "flex-start",
+};
 
 const IndexPage = () => {
-  const [url, setUrl] = React.useState("a");
+  const [url, setUrl] = React.useState("enter your url here");
   const [firstFocus, setFirstFocus] = React.useState(false);
+  const svgRef = React.useRef(null);
 
   // make an svg
-  function downloadAsSVG(event) {
+  function downloadAsSVG() {
     var tempUrl =
-      "data:image/svg+xml;utf8," + encodeURIComponent(event.target.innerHTML);
+      "data:image/svg+xml;utf8," + encodeURIComponent(svgRef.current.innerHTML);
     var link = document.createElement("a");
     link.download = "qr-vector.svg";
     link.href = tempUrl;
@@ -45,27 +53,36 @@ const IndexPage = () => {
     <main style={pageStyles}>
       <h1 style={headingStyles}>QR Code Generator</h1>
 
-      <form style={formStyles}>
-        <input
-          style={inputStyles}
-          value={url}
-          onChange={(e) => setUrl(e.target.value)}
-          onFocus={() => {
-            if (!firstFocus) setUrl("");
-            setFirstFocus(true);
-          }}
-          maxLength={2953}
-        />
-      </form>
+      <div style={flex}>
+        <div>
+          <div style={downloader} ref={svgRef}>
+            <QRCodeSVG
+              value={url}
+              style={svgStyle}
+              // renderAs="svg"
+              level="L"
+              size="113"
+            />
+          </div>
+        </div>
+        <div>
+          <form style={formStyles}>
+            <input
+              style={inputStyles}
+              value={url}
+              onChange={(e) => setUrl(e.target.value)}
+              onFocus={() => {
+                if (!firstFocus) setUrl("");
+                setFirstFocus(true);
+              }}
+              maxLength={2953}
+            />
+          </form>
 
-      <div style={downloader} onClick={downloadAsSVG}>
-        <QRCodeSVG
-          value={url}
-          style={svgStyle}
-          // renderAs="svg"
-          level="L"
-          size="113"
-        />
+          <div>
+            <button onClick={downloadAsSVG}>download QR code as SVG</button>
+          </div>
+        </div>
       </div>
     </main>
   );
