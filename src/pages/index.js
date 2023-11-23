@@ -28,16 +28,15 @@ const svgStyle = {
 };
 
 const IndexPage = () => {
-  const [url, setUrl] = React.useState("enter a url");
+  const [url, setUrl] = React.useState("a");
   const [firstFocus, setFirstFocus] = React.useState(false);
 
   // make an svg
   function downloadAsSVG(event) {
-    console.log(event.target.children[0]);
     var tempUrl =
       "data:image/svg+xml;utf8," + encodeURIComponent(event.target.innerHTML);
     var link = document.createElement("a");
-    link.download = url;
+    link.download = "qr-vector.svg";
     link.href = tempUrl;
     link.click();
   }
@@ -55,6 +54,7 @@ const IndexPage = () => {
             if (!firstFocus) setUrl("");
             setFirstFocus(true);
           }}
+          maxLength={2953}
         />
       </form>
 
